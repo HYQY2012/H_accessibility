@@ -1,4 +1,4 @@
-# 网页无障碍辅助工具（纯净无注释版）
+# 网页无障碍辅助工具
 一款轻量、流畅、无侵入的网页无障碍辅助脚本，支持字体调节、语音朗读、虚拟键盘、对比度切换等功能，适配全平台网页，开箱即用。
 
 ## 功能特性
@@ -47,12 +47,16 @@
 ```
 
 ### 方式二：外部文件引入
-1. 保存代码为 `accessibility.js`
-2. 在 HTML 中引入
+1.1 保存代码为 `H_accessibility.js`
+1.2 在 HTML 中引入
 ```html
-<script src="accessibility.js"></script>
+<script src="H_accessibility.js"></script>
 ```
-
+2.1 导入在线js `[https://hyqy2012.github.io/H_accessibility/H_accessibility.js](https://hyqy2012.github.io/H_accessibility/H_accessibility.js)`
+1.2 在 HTML 中引入
+```html
+<script src="[H_accessibility.js](https://hyqy2012.github.io/H_accessibility/H_accessibility.js)"></script>
+```
 ## 使用说明
 1. 打开页面后，**右侧自动出现工具栏**
 2. 点击 🗣️ 开启朗读模式，点击页面文字即可朗读
