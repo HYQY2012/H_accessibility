@@ -53,7 +53,7 @@
 <script src="H_accessibility.js"></script>
 ```
 2.1 导入在线js `https://https://code.xn--vqq068m4ham0n.space/H_accessibility.js`
-1.2 在 HTML 中引入
+2.2 在 HTML 中引入
 ```html
 <script src="https://https://code.xn--vqq068m4ham0n.space/H_accessibility.js"></script>
 ```
