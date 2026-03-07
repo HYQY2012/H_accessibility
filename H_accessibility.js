@@ -1,7 +1,7 @@
 <!-- 欢迎使用该无障碍工具！ -->
 <!-- 该工具仓库链接：https://github.com/HYQY2012/H_accessibility -->
 <!-- BY HYQY -->
-<!-- 版本2.0，添加了最小化的工具 -->
+<!-- 版本2.0 -->
 const style=document.createElement('style');style.textContent=`
 * {box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;}
 .accessibility-sidebar{position:fixed;top:0;right:0;height:100vh;width:72px;background:rgba(255,255,255,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:-2px 0 15px rgba(0,0,0,0.05);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;z-index:99999;padding:20px 0;border-radius:12px 0 0 12px;margin-right:8px;transition: all 0.3s ease;}
@@ -78,7 +78,7 @@ const floatBtn=document.createElement('div');floatBtn.className='accessibility-f
 const modal=document.createElement('div');modal.className='accessibility-modal';modal.innerHTML=`
 <div class="accessibility-modal-content">
 <div class="accessibility-svg-container">
-<img src="about.svg" style="max-width:100%;max-height:100%;object-fit:contain" alt="关于我们">
+<img src="https://code.xn--vqq068m4ham0n.space/about.svg" style="max-width:100%;max-height:100%;object-fit:contain" alt="关于我们">
 </div>
 <button class="accessibility-close-modal" id="close-modal">✕</button>
 </div>
