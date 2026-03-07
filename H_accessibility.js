@@ -1,14 +1,20 @@
 <!-- 欢迎使用该无障碍工具！ -->
 <!-- 该工具仓库链接：https://github.com/HYQY2012/H_accessibility -->
 <!-- BY HYQY -->
-
-
+<!-- 版本2.0，添加了最小化的工具 -->
 const style=document.createElement('style');style.textContent=`
 * {box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;}
-.accessibility-sidebar{position:fixed;top:0;right:0;height:100vh;width:72px;background:rgba(255,255,255,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:-2px 0 15px rgba(0,0,0,0.05);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;z-index:99999;padding:20px 0;border-radius:12px 0 0 12px;margin-right:8px;}
+.accessibility-sidebar{position:fixed;top:0;right:0;height:100vh;width:72px;background:rgba(255,255,255,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:-2px 0 15px rgba(0,0,0,0.05);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;z-index:99999;padding:20px 0;border-radius:12px 0 0 12px;margin-right:8px;transition: all 0.3s ease;}
+.accessibility-sidebar.minimized{width:0;margin-right:0;padding:0;overflow:hidden;}
+.accessibility-float-btn{position:fixed;right:20px;bottom:20px;width:60px;height:60px;border-radius:50%;background:#0071e3;color:#fff;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:99999;box-shadow:0 6px 16px rgba(0,113,227,0.35);backdrop-filter:blur(10px);transition:all 0.3s ease;display:none;border:none;outline:none;}
+.accessibility-float-btn.show{display:flex;}
+.accessibility-float-btn:hover{transform:scale(1.1);box-shadow:0 8px 20px rgba(0,113,227,0.45);}
 .accessibility-icon-btn{width:56px;height:56px;border-radius:14px;border:none;background:rgba(245,245,247,1);color:#1d1d1f;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .1s ease;font-weight:600;}
 .accessibility-icon-btn:hover{background:rgba(230,230,235,1);transform:scale(1.03);}
 .accessibility-icon-btn.active{background:#0071e3;color:#fff;}
+/* 优化为小型圆形关闭按钮 */
+.accessibility-mini-btn{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:none;background:rgba(245,245,247,1);color:#666;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease;outline:none;line-height:1;text-align:center;padding:0;margin:0;}
+.accessibility-mini-btn:hover{background:#e0e0e5;color:#333;transform:scale(1.08);}
 .accessibility-modal{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:999999;}
 .accessibility-modal.show{display:flex;}
 .accessibility-modal-content{width:80%;max-width:700px;background:#ffffff;border-radius:20px;padding:32px;box-shadow:0 15px 50px rgba(0,0,0,0.1);position:relative;}
@@ -53,6 +59,8 @@ document.addEventListener('keydown', e => {
 });
 
 const sidebar=document.createElement('div');sidebar.className='accessibility-sidebar';sidebar.innerHTML=`
+<!-- 更换为×图标，更符合关闭/最小化的视觉认知 -->
+<button class="accessibility-mini-btn" id="minimize-sidebar">×</button>
 <button class="accessibility-icon-btn" id="font-size-plus">➕</button>
 <button class="accessibility-icon-btn" id="font-size-minus">➖</button>
 <button class="accessibility-icon-btn" id="font-weight">𝐁</button>
@@ -64,6 +72,8 @@ const sidebar=document.createElement('div');sidebar.className='accessibility-sid
 <button class="accessibility-icon-btn" id="about-us">ℹ️</button>
 <button class="accessibility-icon-btn" id="toggle-subtitle">📝</button>
 `;document.body.appendChild(sidebar);
+
+const floatBtn=document.createElement('div');floatBtn.className='accessibility-float-btn';floatBtn.id='float-btn';floatBtn.innerHTML='♿';document.body.appendChild(floatBtn);
 
 const modal=document.createElement('div');modal.className='accessibility-modal';modal.innerHTML=`
 <div class="accessibility-modal-content">
@@ -297,6 +307,22 @@ function bindKeyEvents(){
 
 bindKeyEvents();
 
+document.getElementById("minimize-sidebar").onclick=()=>{
+  sidebar.classList.add('minimized');
+  setTimeout(() => {
+    floatBtn.classList.add('show');
+  }, 200);
+  speakSweet("已最小化无障碍工具栏");
+};
+
+document.getElementById("float-btn").onclick=()=>{
+  floatBtn.classList.remove('show');
+  setTimeout(() => {
+    sidebar.classList.remove('minimized');
+  }, 100);
+  speakSweet("已恢复无障碍工具栏");
+};
+
 document.getElementById("font-size-plus").onclick=()=>{baseFontSize+=2;document.body.style.fontSize=baseFontSize+"px"};
 document.getElementById("font-size-minus").onclick=()=>{baseFontSize>12&&(baseFontSize-=2);document.body.style.fontSize=baseFontSize+"px"};
 document.getElementById("font-weight").onclick=()=>{fontWeightLevel=(fontWeightLevel+1)%4;document.body.classList.remove("font-bold-1","font-bold-2","font-bold-3");fontWeightLevel>0&&document.body.classList.add("font-bold-"+fontWeightLevel)};
@@ -313,7 +339,7 @@ document.getElementById("toggle-subtitle").onclick=()=>{subtitleVisible=!subtitl
 
 document.addEventListener("click", function(e) {
   const target = e.target;
-  if (target.closest(".accessibility-sidebar") || target.closest(".accessibility-modal")) return;
+  if (target.closest(".accessibility-sidebar") || target.closest(".accessibility-modal") || target.closest(".accessibility-float-btn")) return;
 
   const tag = target.tagName.toLowerCase();
   if ((tag === "input" || tag === "textarea") && clickReadMode) {
@@ -356,5 +382,4 @@ document.addEventListener("click", function(e) {
 });
 
 modal.onclick=t=>{t.target===modal&&modal.classList.remove("show")};
-
 speedModal.onclick=t=>{t.target===speedModal&&speedModal.classList.remove("show")};
